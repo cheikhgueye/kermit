@@ -1,0 +1,50 @@
+
+
+###Host: localhost:8080
+## Connexion d un utilisateur [POST]
+###POST /api/auth/signin
+    + Headers
+
+            Content-Type: application/json
+
+            Cache-Control: no-cache
+
++ Request (application/json)
+
+        {
+            "usernameOrEmail":"",
+            "password":""
+
+        }
+
+
++ Response 200 (application/json)
+
+
+    + Body
+
+            { "accessToken" : "accessToken",
+               "tokenType" : "Bearer" }
+
+## infos du current user [GET]
+###GET /api/user/me 
+
+    + Headers
+
+            Content-Type: application/json
+            Authorization: Bearer+token
+            Cache-Control: no-cache
++ Response 200 (application/json)
+
+    + Headers
+            Content-Type: application/json
+            Cache-Control: no-cache
+          
+
+    + Body
+
+            {
+             "id": long,
+              "username": String,
+              "name": String
+             }
