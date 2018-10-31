@@ -1,16 +1,29 @@
 package sn.dsi.kermit.controller;
 
 
+import java.net.URI;
+import java.util.Collections;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import sn.dsi.kermit.exception.AppException;
 import sn.dsi.kermit.exception.ResourceNotFoundException;
+import sn.dsi.kermit.model.Role;
+import sn.dsi.kermit.model.RoleName;
 import sn.dsi.kermit.model.User;
+import sn.dsi.kermit.payload.ApiResponse;
 import sn.dsi.kermit.payload.PagedResponse;
+import sn.dsi.kermit.payload.SignUpRequest;
 import sn.dsi.kermit.payload.UserIdentityAvailability;
 import sn.dsi.kermit.payload.UserProfile;
 import sn.dsi.kermit.payload.UserSummary;
@@ -70,6 +83,20 @@ public class UserController {
         return userProfile;
     }
 
-    
+
+    @PutMapping("update/user/{id}")
+    public User updateNote(@PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        user.setName(userDetails.getName());
+        user.setUsername(userDetails.getUsername());
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(userDetails.getPassword());
+
+        User updatedUser = userRepository.save(user);
+        return updatedUser;
+    }
 
 }

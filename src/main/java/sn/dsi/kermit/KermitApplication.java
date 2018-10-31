@@ -27,7 +27,7 @@ import java.util.TimeZone;
 		Jsr310JpaConverters.class
 })
 public class KermitApplication {
-
+public String url= "http://localhost:8081";
 	public static void main(String[] args) {
 		SpringApplication.run(KermitApplication.class, args);
 	}
@@ -37,7 +37,7 @@ public class KermitApplication {
 @Bean
 public Docket Api() {
     return new Docket(DocumentationType.SWAGGER_2)
-    	 .host("http://localhost:8081")
+    	 .host( url)
          .select()
             .apis(RequestHandlerSelectors.basePackage("sn.dsi.kermit.controller"))
             .paths(PathSelectors.any()).build().pathMapping("/")
