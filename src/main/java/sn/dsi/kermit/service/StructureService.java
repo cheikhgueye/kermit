@@ -73,9 +73,9 @@ public class StructureService {
 
     public Structure createStructure(StructureRequest structureRequest) {
         Structure structure = new Structure();
-        structure.setNameE(structureRequest.getName());
+        structure.setNom(structureRequest.getName());
         structure.setCode_structure(structureRequest.getCode_structure());
-        structure.setType(structureRequest.getType());
+       // structure.setType(structureRequest.getType());
 
         return structureRepository.save(structure);
     }

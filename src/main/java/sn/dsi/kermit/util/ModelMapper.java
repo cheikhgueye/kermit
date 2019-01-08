@@ -17,7 +17,7 @@ public class ModelMapper {
         StructureResponse structureResponse = new  StructureResponse();
         structureResponse .setId(structure.getId());
         structureResponse .setCode_structure(structure.getCode_structure());
-        structureResponse .setType(structure.getType());
+       // structureResponse .setType(structure.getType());
 
         return  structureResponse ;
     }

@@ -30,11 +30,22 @@ public class User extends DateAudit {
     private Long id;
 
     @NotBlank
-    @Size(max = 40)
-    private String name;
-
+    @Size(max = 20)
+    private String nom;
     @NotBlank
-    @Size(max = 15)
+    @Size(max = 20)
+    private String prenom;
+    @NotBlank
+    @Size(max = 90)
+    private String adresse;
+    @NotBlank
+    @Size(max = 100)
+    private String codePostal;
+    @NotBlank
+    @Size(max = 100)
+    private String numeroTel;
+    @NotBlank
+    @Size(max = 30)
     private String username;
 
     @NaturalId
@@ -52,18 +63,75 @@ public class User extends DateAudit {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+   /* @OneToOne(fetch = FetchType.LAZY,
+            cascade =  CascadeType.ALL,
+            mappedBy = "user")
+    private Image image;*/
 
-    public User() {
+
+   
+
+
+
+	public User() {
 
     }
 
-    public User(String name, String username, String email, String password) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
+   
 
+
+    public User(Long id, @NotBlank @Size(max = 20) String nom, @NotBlank @Size(max = 20) String prenom,
+			@NotBlank @Size(max = 90) String adresse, @NotBlank @Size(max = 90) String numeroTel,
+			@NotBlank @Size(max = 15) String username, @NotBlank @Size(max = 40) @Email String email,
+			@NotBlank @Size(max = 100) String password, Set<Role> roles) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.adresse = adresse;
+		this.numeroTel = numeroTel;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+	}
+
+
+
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getNumeroTel() {
+		return numeroTel;
+	}
+
+	public void setNumeroTel(String numeroTel) {
+		this.numeroTel = numeroTel;
+	}
+
+	
     public Long getId() {
         return id;
     }
@@ -80,14 +148,7 @@ public class User extends DateAudit {
         this.username = username;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+  
     public String getEmail() {
         return email;
     }
@@ -111,4 +172,35 @@ public class User extends DateAudit {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
+
+
+	public String getCodePostal() {
+		return codePostal;
+	}
+
+
+
+
+	public void setCodePostal(String codePostal) {
+		this.codePostal = codePostal;
+	}
+
+
+
+
+	/*public Image getImage() {
+		return image;
+	}
+
+
+
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	*/
+
+    
 }

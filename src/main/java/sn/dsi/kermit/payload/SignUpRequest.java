@@ -2,57 +2,102 @@ package sn.dsi.kermit.payload;
 
 import javax.validation.constraints.*;
 
-/**
- * Created by rajeevkumarsingh on 02/08/17.
- */
+import org.hibernate.annotations.NaturalId;
+
+
 
 public class SignUpRequest {
-    @NotBlank
-    @Size(min = 4, max = 40)
-    private String name;
+	    @NotBlank
+	    @Size(max = 20)
+	    private String nom;
+	    @NotBlank
+	    @Size(max = 20)
+	    private String prenom;
+	    @NotBlank
+	    @Size(max = 90)
+	    private String adresse;
+	    @NotBlank
+	    @Size(max = 100)
+	    private String codePostal;
+	    @NotBlank
+	    @Size(max = 100)
+	    private String numeroTel;
+	    @NotBlank
+	    @Size(max = 30)
+	    private String username;
 
-    @NotBlank
-    @Size(min = 3, max = 15)
-    private String username;
+	    @NaturalId
+	    @NotBlank
+	    @Size(max = 40)
+	    @Email
+	    private String email;
 
-    @NotBlank
-    @Size(max = 40)
-    @Email
-    private String email;
+	    @NotBlank
+	    @Size( min=6 ,max = 90)
+	    private String password;
 
-    @NotBlank
-    @Size(min = 6, max = 20)
-    private String password;
+		public String getNom() {
+			return nom;
+		}
 
-    public String getName() {
-        return name;
-    }
+		public void setNom(String nom) {
+			this.nom = nom;
+		}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+		public String getPrenom() {
+			return prenom;
+		}
 
-    public String getUsername() {
-        return username;
-    }
+		public void setPrenom(String prenom) {
+			this.prenom = prenom;
+		}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+		public String getAdresse() {
+			return adresse;
+		}
 
-    public String getEmail() {
-        return email;
-    }
+		public void setAdresse(String adresse) {
+			this.adresse = adresse;
+		}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+		public String getCodePostal() {
+			return codePostal;
+		}
 
-    public String getPassword() {
-        return password;
-    }
+		public void setCodePostal(String codePostal) {
+			this.codePostal = codePostal;
+		}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+		public String getNumeroTel() {
+			return numeroTel;
+		}
+
+		public void setNumeroTel(String numeroTel) {
+			this.numeroTel = numeroTel;
+		}
+
+		public String getUsername() {
+			return username;
+		}
+
+		public void setUsername(String username) {
+			this.username = username;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+	    
 }

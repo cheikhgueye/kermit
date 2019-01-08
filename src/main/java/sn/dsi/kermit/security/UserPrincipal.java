@@ -16,7 +16,11 @@ import java.util.stream.Collectors;
 public class UserPrincipal implements UserDetails {
     private Long id;
 
-    private String name;
+    private String nom;
+    private String prenom;
+    private String adresse;
+    private String codePostal;
+    private String numeroTel;
 
     private String username;
 
@@ -28,27 +32,39 @@ public class UserPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
+ 
 
-    public static UserPrincipal create(User user) {
+    public UserPrincipal(Long id, String nom, String prenom, String adresse, String codePostal,String numeroTel,
+			String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.adresse = adresse;
+		this.codePostal = codePostal;
+		this.numeroTel = numeroTel;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.authorities = authorities;
+	}
+
+	public static UserPrincipal create(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())
         ).collect(Collectors.toList());
 
         return new UserPrincipal(
-                user.getId(),
-                user.getName(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
-                authorities
+        		 user.getId(),
+                 user.getNom(),
+                 user.getPrenom(),
+                 user.getAdresse(),
+                 user.getCodePostal(),
+                 user.getNumeroTel(),
+                 user.getUsername(),
+                 user.getEmail(),
+                 user.getPassword(),
+                 authorities
         );
     }
 
@@ -56,15 +72,43 @@ public class UserPrincipal implements UserDetails {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
+   
 
     public String getEmail() {
         return email;
     }
+    
 
-    @Override
+    public String getNom() {
+		return nom;
+	}
+
+	
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	
+	public String getAdresse() {
+		return adresse;
+	}
+
+	
+
+	public String getNumeroTel() {
+		return numeroTel;
+	}
+
+	
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	
+
+	@Override
     public String getUsername() {
         return username;
     }

@@ -22,9 +22,6 @@ import sn.dsi.kermit.security.JwtAuthenticationEntryPoint;
 import sn.dsi.kermit.security.JwtAuthenticationFilter;
 
 
-/**
- * Created by rajeevkumarsingh on 01/08/17.
- */
 
 @Configuration
 @EnableWebSecurity
@@ -98,7 +95,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                 "/swagger-resources/configuration/ui", 
                                 "/swagger-resources/configuration/security")
                 .permitAll()
-                     .antMatchers("/sendMail")
+                     .antMatchers("/mail**")
+                        .permitAll()
+                        .antMatchers("/api/user/**")
+                        .permitAll()
+                        .antMatchers("/structure/**")
+                        .permitAll()
+                        .antMatchers("/indicateur/**")
+                        .permitAll()
+                        .antMatchers("/objectif/**")
+                        .permitAll()
+                        .antMatchers("/tache/**")
+                        .permitAll()
+                        .antMatchers("/type/**")
+                        .permitAll()
+                        .antMatchers("/theme/**")
+                        .permitAll()
+                        .antMatchers("/courbe/**")
                         .permitAll()
                     .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                         .permitAll()

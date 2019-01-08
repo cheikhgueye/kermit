@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -42,22 +43,27 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+   
     @Autowired
-    private StructureRepository pollRepository;
-
-    @Autowired
-    private ObjectifRepository voteRepository;
-
+    PasswordEncoder passwordEncoder;
    
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("user/me")
-    @PreAuthorize("hasRole('USER')")
-    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-        return userSummary;
+    @GetMapping("/user/currentUser/{id}")
+ 
+    public User getCurrentUser(@PathVariable(value = "id") Long userId) {
+    	  User user = userRepository.findById(userId)
+                  .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+
+        return user;
     }
+    @GetMapping("/user/me")
+    // @PreAuthorize("hasRole('USER')")
+     public  UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getNom());
+         return userSummary;
+     }
 
     @GetMapping("/users/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
@@ -71,30 +77,33 @@ public class UserController {
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @GetMapping("/users/{username}")
-    public UserProfile getUserProfile(@PathVariable(value = "username") String username) {
+    @GetMapping("/user/{username}")
+    public User getUserProfile(@PathVariable(value = "username") String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
        
 
-        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName());
+        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getNom());
 
-        return userProfile;
+        return user;
     }
 
 
-    @PutMapping("update/user/{id}")
+    @PutMapping("/user/update/{id}")
     public User updateNote(@PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
-        user.setName(userDetails.getName());
+        user.setNom(userDetails.getNom());
+        user.setPrenom(userDetails.getPrenom());
         user.setUsername(userDetails.getUsername());
+        user.setAdresse(userDetails.getAdresse());
+        user.setCodePostal(userDetails.getCodePostal());
+        user.setNumeroTel( userDetails.getNumeroTel());
         user.setEmail(userDetails.getEmail());
-        user.setPassword(userDetails.getPassword());
-
+       // user.setPassword(passwordEncoder.encode(userDetails.getPassword()));
         User updatedUser = userRepository.save(user);
         return updatedUser;
     }

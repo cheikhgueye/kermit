@@ -12,9 +12,7 @@ import sn.dsi.kermit.model.Structure;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created by rajeevkumarsingh on 20/11/17.
- */
+
 @Repository
 public interface StructureRepository extends JpaRepository<Structure, Long> {
 
